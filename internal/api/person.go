@@ -50,7 +50,10 @@ func (api *PersonAPI) AddPersonHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Successfully added person:", personData.Name)
 	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte("Person added successfully"))
+	_, err = w.Write([]byte("Person added successfully"))
+	if err != nil {
+		return
+	}
 }
 
 func (api *PersonAPI) GetPersonsHandler(w http.ResponseWriter, r *http.Request) {
@@ -90,7 +93,10 @@ func (api *PersonAPI) GetPersonsHandler(w http.ResponseWriter, r *http.Request) 
 	log.Printf("Successfully fetched %d persons", len(persons))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(responseData)
+	_, err = w.Write(responseData)
+	if err != nil {
+		return
+	}
 }
 
 func (api *PersonAPI) DeletePersonHandler(w http.ResponseWriter, r *http.Request) {
@@ -121,7 +127,10 @@ func (api *PersonAPI) DeletePersonHandler(w http.ResponseWriter, r *http.Request
 	}
 	log.Printf("Successfully deleted person with ID %d", id)
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Person delete successfully"))
+	_, err = w.Write([]byte("Person delete successfully"))
+	if err != nil {
+		return
+	}
 }
 
 func (api *PersonAPI) UpdatePersonHandler(w http.ResponseWriter, r *http.Request) {
@@ -146,5 +155,8 @@ func (api *PersonAPI) UpdatePersonHandler(w http.ResponseWriter, r *http.Request
 
 	log.Printf("Successfully updated person: %s %s", personData.Name, personData.Surname)
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Person updated successfully"))
+	_, err = w.Write([]byte("Person updated successfully"))
+	if err != nil {
+		return
+	}
 }
